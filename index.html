@@ -8,7 +8,8 @@
     />
     <title>GHOST TOWN - Η ΑΡΧΗ | Airsoft Event</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Bebas+Neue&family=Share+Tech+Mono&display=swap");
+      /* Exo 2 + Oswald handle Greek chars; Noto Sans Mono handles Greek mono */
+      @import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Bebas+Neue&family=Share+Tech+Mono&family=Exo+2:wght@700;900&family=Oswald:wght@400;600&family=Noto+Sans+Mono:wght@400&display=swap");
 
       /* ── VARIABLES ─────────────────────────────────── */
       :root {
@@ -20,9 +21,10 @@
         --red-dim: rgba(178, 34, 34, 0.25);
         --green: #4a7c59;
         --green-dim: rgba(74, 124, 89, 0.25);
-        --title: "Black Ops One", cursive;
-        --label: "Bebas Neue", cursive;
-        --mono: "Share Tech Mono", monospace;
+        /* Exo 2 / Oswald / Noto Sans Mono cover Greek chars that Black Ops One / Bebas Neue lack */
+        --title: "Black Ops One", "Exo 2", cursive;
+        --label: "Bebas Neue", "Oswald", cursive;
+        --mono: "Share Tech Mono", "Noto Sans Mono", monospace;
       }
 
       /* ── RESET ─────────────────────────────────────── */
@@ -132,6 +134,26 @@
         letter-spacing: 0.35em;
         color: var(--red);
       }
+      /* Hamburger button — hidden on desktop */
+      .nav-toggle {
+        display: none;
+        background: none;
+        border: 1px solid rgba(178, 34, 34, 0.45);
+        color: var(--red);
+        font-size: 1.3rem;
+        line-height: 1;
+        padding: 6px 12px;
+        cursor: crosshair;
+        transition:
+          color 0.3s,
+          border-color 0.3s;
+        z-index: 1001;
+        position: relative;
+      }
+      .nav-toggle:hover {
+        color: var(--text);
+        border-color: var(--text-dim);
+      }
       .nav-links {
         display: flex;
         gap: 32px;
@@ -176,8 +198,7 @@
         overflow: hidden;
         background: #0a0806;
       }
-
-      /* PASTE YOUR SOLDIER IMAGE URL in the background property below */
+      /* PASTE YOUR SOLDIER IMAGE URL below */
       .hero-bg {
         position: absolute;
         inset: -20%;
@@ -489,7 +510,6 @@
           rgba(178, 34, 34, 0.4) 21px
         );
       }
-
       .sec-label {
         display: flex;
         align-items: center;
@@ -544,7 +564,7 @@
       .scenario-box {
         background: #100e0c;
         border-left: 4px solid var(--red);
-        padding: 44px 44px 44px 52px;
+        padding: 44px 44px 60px 52px;
         position: relative;
         overflow: hidden;
       }
@@ -568,10 +588,10 @@
         z-index: 2;
       }
 
-      /* Classified stamp */
+      /* Classified stamp — positioned at BOTTOM-RIGHT so it never covers heading text */
       .stamp {
         position: absolute;
-        top: 28px;
+        bottom: 20px;
         right: 28px;
         font-family: var(--title);
         font-size: 1.3rem;
@@ -594,7 +614,6 @@
         color: var(--red);
         margin-bottom: 18px;
       }
-
       #tw-text {
         line-height: 1.95;
         color: var(--text);
@@ -735,7 +754,6 @@
         background: rgba(178, 34, 34, 0.07);
         border-left-color: var(--red);
       }
-
       .panel {
         padding: 0 24px;
         background: rgba(10, 9, 8, 0.9);
@@ -792,8 +810,14 @@
         line-height: 1.75;
       }
 
+      /* FPS table scrollable wrapper for small screens */
+      .fps-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
       .fps-table {
         width: 100%;
+        min-width: 480px;
         border-collapse: collapse;
         font-size: 0.82rem;
         margin-bottom: 20px;
@@ -933,6 +957,237 @@
         color: rgba(138, 128, 112, 0.28);
         letter-spacing: 0.08em;
       }
+
+      /* ═══════════════════════════════════════════════
+         MOBILE RESPONSIVE
+         ═══════════════════════════════════════════════ */
+
+      /* ── Tablet & small desktop (≤ 900px) ─────────── */
+      @media (max-width: 900px) {
+        nav {
+          padding: 16px 28px;
+        }
+        .inner {
+          padding: 100px 28px;
+        }
+      }
+
+      /* ── Mobile (≤ 768px) ──────────────────────────── */
+      @media (max-width: 768px) {
+        /* Hamburger visible, links become fullscreen overlay */
+        .nav-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .nav-links {
+          position: fixed;
+          inset: 0;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 36px;
+          background: rgba(5, 4, 4, 0.97);
+          border: none;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.35s ease;
+          z-index: 998;
+        }
+        .nav-links.open {
+          opacity: 1;
+          pointer-events: all;
+        }
+        .nav-links a {
+          font-size: 1.5rem;
+          letter-spacing: 0.4em;
+          color: var(--text-dim);
+        }
+        .nav-links a:hover {
+          color: var(--text);
+        }
+
+        /* Hero */
+        .ch {
+          width: 36px;
+          height: 36px;
+        }
+        .ch-tl,
+        .ch-tr {
+          top: 72px;
+        }
+        .ch-tl,
+        .ch-bl {
+          left: 16px;
+        }
+        .ch-tr,
+        .ch-br {
+          right: 16px;
+        }
+        .ch-bl,
+        .ch-br {
+          bottom: 48px;
+        }
+        .reticle {
+          width: 64px;
+          height: 64px;
+        }
+
+        /* Countdown */
+        .countdown {
+          padding: 16px 20px;
+          gap: 3px;
+          margin-top: 36px;
+        }
+        .cd-unit {
+          min-width: 54px;
+        }
+        .cd-num {
+          font-size: clamp(1.6rem, 7vw, 2.4rem);
+        }
+        .cd-sep {
+          font-size: 1.8rem;
+          margin-bottom: 18px;
+        }
+
+        /* Sections */
+        .inner {
+          padding: 80px 20px;
+        }
+
+        /* Scenario: stamp at bottom-right, compact padding */
+        .scenario-box {
+          padding: 36px 24px 70px;
+        }
+        .stamp {
+          font-size: 1rem;
+          padding: 4px 10px;
+          bottom: 16px;
+          right: 16px;
+        }
+
+        /* Timeline */
+        .tl {
+          padding-left: 28px;
+        }
+        .tl-item {
+          padding-left: 12px;
+        }
+        .tl-item::before {
+          left: -27px;
+        }
+
+        /* Map */
+        .map-placeholder {
+          height: 300px;
+        }
+        .map-wrap::before {
+          font-size: 0.55rem;
+          letter-spacing: 0.15em;
+        }
+
+        /* Accordion */
+        .accordion {
+          font-size: 0.95rem;
+        }
+      }
+
+      /* ── Small mobile (≤ 480px) ────────────────────── */
+      @media (max-width: 480px) {
+        nav {
+          padding: 14px 20px;
+        }
+        .nav-logo {
+          font-size: 1.1rem;
+          letter-spacing: 0.25em;
+        }
+
+        /* Hero */
+        .event-badge {
+          font-size: 0.6rem;
+          letter-spacing: 0.28em;
+          padding: 4px 12px;
+          margin-bottom: 18px;
+        }
+        .subtitle {
+          letter-spacing: 0.3em;
+        }
+        .ch {
+          opacity: 0.3;
+        }
+
+        /* Countdown: wrap to 2×2 on very small screens */
+        .countdown {
+          flex-wrap: wrap;
+          gap: 0;
+          padding: 14px 16px;
+          max-width: 260px;
+        }
+        .cd-unit {
+          min-width: 70px;
+          margin: 6px;
+        }
+        /* Hide separators when wrapped — they'd look odd in a grid */
+        .cd-sep {
+          display: none;
+        }
+
+        /* Sections */
+        .inner {
+          padding: 60px 16px;
+        }
+
+        /* Scenario: hide stamp on very small screens to avoid any overlap */
+        .stamp {
+          display: none;
+        }
+
+        /* Timeline */
+        .tl-title {
+          font-size: 0.95rem;
+        }
+        .tl-desc {
+          font-size: 0.8rem;
+        }
+
+        /* Accordion */
+        .accordion {
+          font-size: 0.88rem;
+          padding: 18px 38px 18px 16px;
+        }
+        .panel {
+          padding: 0 16px;
+        }
+        .rl-tag {
+          font-size: 0.58rem;
+          letter-spacing: 0.2em;
+        }
+        .rl-text {
+          font-size: 0.82rem;
+        }
+
+        /* Map */
+        .map-placeholder {
+          height: 240px;
+        }
+        .map-wrap::before {
+          font-size: 0.5rem;
+          letter-spacing: 0.1em;
+          left: 8px;
+        }
+
+        /* Footer */
+        .ft-unit {
+          font-size: 0.6rem;
+          letter-spacing: 0.3em;
+        }
+        .ft-coords {
+          font-size: 0.6rem;
+        }
+        .ft-logo {
+          font-size: 1.2rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -942,7 +1197,7 @@
     <!-- Particles -->
     <canvas id="particles"></canvas>
 
-    <!-- SVG distress filter -->
+    <!-- SVG distress filter for stamp -->
     <svg style="position: absolute; width: 0; height: 0; overflow: hidden">
       <defs>
         <filter id="distress">
@@ -966,7 +1221,18 @@
     <!-- NAV -->
     <nav>
       <div class="nav-logo">// GT-01</div>
-      <ul class="nav-links">
+      <button
+        class="nav-toggle"
+        id="navToggle"
+        aria-label="Menu"
+        aria-expanded="false"
+      >
+        &#9776;
+      </button>
+      <ul
+        class="nav-links"
+        id="navLinks"
+      >
         <li><a href="#scenario">ΣΕΝΑΡΙΟ</a></li>
         <li><a href="#timeline">ΧΡΟΝΟΣ</a></li>
         <li><a href="#rules">ROE</a></li>
@@ -1058,7 +1324,7 @@
         </div>
         <div class="scenario-box reveal">
           <div class="stamp">TOP SECRET</div>
-          <div class="scenario-lbl">// SITREP -- CLASSIFIED //</div>
+          <div class="scenario-lbl">// SITREP — CLASSIFIED //</div>
           <h2 style="margin-bottom: 24px">Επιχειρησιακό Σενάριο</h2>
           <div id="tw-text"></div>
         </div>
@@ -1079,7 +1345,7 @@
         </h2>
         <div class="tl">
           <div class="tl-item reveal">
-            <div class="tl-time">07:30 -- ΠΑΡΟΥΣΙΑ</div>
+            <div class="tl-time">06:30 — ΠΑΡΟΥΣΙΑ</div>
             <div class="tl-title">ASSEMBLY POINT</div>
             <div class="tl-desc">
               Συγκέντρωση όλων των μονάδων στο σημείο εκκίνησης. Έλεγχος
@@ -1087,7 +1353,7 @@
             </div>
           </div>
           <div class="tl-item reveal">
-            <div class="tl-time">08:30 -- BRIEFING</div>
+            <div class="tl-time">07:30 — BRIEFING</div>
             <div class="tl-title">ΕΠΙΧΕΙΡΗΣΙΑΚΟ BRIEFING</div>
             <div class="tl-desc">
               Ανακοίνωση σεναρίου, ανάθεση ρόλων, ενημέρωση ROE. Παρουσία
@@ -1095,7 +1361,7 @@
             </div>
           </div>
           <div class="tl-item reveal">
-            <div class="tl-time">09:00 -- OP START</div>
+            <div class="tl-time">08:00 — OP START</div>
             <div class="tl-title">ΕΝΑΡΞΗ ΕΠΙΧΕΙΡΗΣΗΣ</div>
             <div class="tl-desc">
               Η επιχείρηση ξεκινά. Κανένας χωρίς εντολή δεν εγκαταλείπει τη θέση
@@ -1103,7 +1369,7 @@
             </div>
           </div>
           <div class="tl-item reveal">
-            <div class="tl-time">11:00 -- SITREP</div>
+            <div class="tl-time">13:00 — SITREP</div>
             <div class="tl-title">ΕΝΔΙΑΜΕΣΟ BRIEFING</div>
             <div class="tl-desc">
               Ενδιάμεση αξιολόγηση, ανεφοδιασμός, τροποποίηση σεναρίου αν
@@ -1111,9 +1377,11 @@
             </div>
           </div>
           <div class="tl-item reveal">
-            <div class="tl-time">13:00 -- ENDEX</div>
+            <div class="tl-time">17:00 — ENDEX</div>
             <div class="tl-title">ΤΕΛΟΣ ΕΠΙΧΕΙΡΗΣΗΣ</div>
-            <div class="tl-desc">Αποστρατικοποίηση. Debrief.</div>
+            <div class="tl-desc">
+              Αποστρατικοποίηση. Debrief. Ανακοίνωση αποτελεσμάτων.
+            </div>
           </div>
         </div>
       </div>
@@ -1146,7 +1414,7 @@
             <div class="rl-item mandatory">
               <span class="rl-tag">ΑΠΑΡΑΙΤΗΤΟ</span>
               <span class="rl-text"
-                >Προστασία ματιών -- Z87+ / EN166B goggles ή MIL-PRF-32432
+                >Προστασία ματιών — Z87+ / EN166B goggles ή MIL-PRF-32432
                 glasses/goggles. Εκτός πεδίου μόνο με εντολή safety
                 officer.</span
               >
@@ -1161,7 +1429,7 @@
             </div>
             <div class="rl-item optional">
               <span class="rl-tag">ΠΡΟΑΙΡΕΤΙΚΟ</span>
-              <span class="rl-text">Χρήση μάσκας -- δικά σας δόντια.</span>
+              <span class="rl-text">Χρήση μάσκας — δικά σας δόντια.</span>
             </div>
           </div>
         </div>
@@ -1174,62 +1442,64 @@
             <p class="rl-note">
               ⚠ Αποφεύγουμε όσο είναι δυνατόν τις βολές στο κεφάλι.
             </p>
-            <table class="fps-table">
-              <thead>
-                <tr>
-                  <th>ΚΑΤΗΓΟΡΙΑ</th>
-                  <th>MAX FPS</th>
-                  <th>JOULES</th>
-                  <th>MIN ΑΠΟΣΤΑΣΗ</th>
-                  <th>MAX BB</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Πιστόλι / Sidearm</td>
-                  <td>320</td>
-                  <td>~1.0 J</td>
-                  <td>1 μ</td>
-                  <td>0.28g</td>
-                </tr>
-                <tr>
-                  <td>Τυφέκιο AEG / GBB</td>
-                  <td>350</td>
-                  <td>~1.2 J</td>
-                  <td>10 μ</td>
-                  <td>0.30g</td>
-                </tr>
-                <tr>
-                  <td>MG **</td>
-                  <td>400</td>
-                  <td>~1.5 J</td>
-                  <td>20 μ</td>
-                  <td>0.32g</td>
-                </tr>
-                <tr>
-                  <td>DMR * **</td>
-                  <td>450</td>
-                  <td>~1.9 J</td>
-                  <td>25 μ</td>
-                  <td>0.36g</td>
-                </tr>
-                <tr>
-                  <td>Sniper -- bolt action **</td>
-                  <td>550</td>
-                  <td>~2.8 J</td>
-                  <td>30 μ</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="fps-scroll">
+              <table class="fps-table">
+                <thead>
+                  <tr>
+                    <th>ΚΑΤΗΓΟΡΙΑ</th>
+                    <th>MAX FPS</th>
+                    <th>JOULES</th>
+                    <th>MIN ΑΠΟΣΤΑΣΗ</th>
+                    <th>MAX BB</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Πιστόλι / Sidearm</td>
+                    <td>320</td>
+                    <td>~1.0 J</td>
+                    <td>1 μ</td>
+                    <td>0.28g</td>
+                  </tr>
+                  <tr>
+                    <td>Τυφέκιο AEG / GBB</td>
+                    <td>350</td>
+                    <td>~1.2 J</td>
+                    <td>10 μ</td>
+                    <td>0.30g</td>
+                  </tr>
+                  <tr>
+                    <td>MG **</td>
+                    <td>400</td>
+                    <td>~1.5 J</td>
+                    <td>20 μ</td>
+                    <td>0.32g</td>
+                  </tr>
+                  <tr>
+                    <td>DMR * **</td>
+                    <td>450</td>
+                    <td>~1.9 J</td>
+                    <td>25 μ</td>
+                    <td>0.36g</td>
+                  </tr>
+                  <tr>
+                    <td>Sniper — bolt action **</td>
+                    <td>550</td>
+                    <td>~2.8 J</td>
+                    <td>30 μ</td>
+                    <td>—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <div class="fps-notes">
               <p>
                 * DMR: τυφέκιο μήκους ≥ 1μ με διόπτρα και δίποδα, ή αντίγραφο
-                πραγματικού (M14, SR25, SVU, VSS κ.α.). Μόνο βολή κατά βολή --
+                πραγματικού (M14, SR25, SVU, VSS κ.α.). Μόνο βολή κατά βολή —
                 max 50 bbs ανά γεμιστήρα (Real-cap, 7.62mm).
               </p>
-              <p>** Περιορισμένος αριθμός -- 1 ανά 10 παίκτες.</p>
-              <p>Χειροβομβίδες: μόνο εμπορίου -- ΟΧΙ αυτοσχέδιες.</p>
+              <p>** Περιορισμένος αριθμός — 1 ανά 10 παίκτες.</p>
+              <p>Χειροβομβίδες: μόνο εμπορίου — ΟΧΙ αυτοσχέδιες.</p>
             </div>
           </div>
         </div>
@@ -1252,35 +1522,31 @@
               ⚠ Κάθε παίκτης είναι υπεύθυνος για την τιμιότητά του στο πεδίο.
               Χωρίς αυτή, δεν υπάρχει παιχνίδι.
             </p>
-
             <div class="rl-item mandatory">
               <span class="rl-tag">HIT CALL</span>
               <span class="rl-text"
                 >Όταν χτυπηθείς, φωνάζεις αμέσως και δυνατά
-                <strong style="color: var(--text)">«ΕΞΩ»</strong> ή
+                <strong style="color: var(--text)">«ΧΤΥΠΗΘΗΚΑ»</strong> ή
                 <strong style="color: var(--text)">«HIT»</strong>. Σηκώνεις το
                 όπλο ή το χέρι ψηλά και βγάζεις το dead rag (κόκκινο πανί/arm
                 band).</span
               >
             </div>
-
             <div class="rl-item mandatory">
               <span class="rl-tag">ΤΙ ΜΕΤΡΑΕΙ</span>
               <span class="rl-text"
                 >Μετράει κάθε βολή που αγγίζει το σώμα, τον εξοπλισμό ή το όπλο
-                σου -- συμπεριλαμβανομένων ricochet και friendly fire.</span
+                σου — συμπεριλαμβανομένων ricochet και friendly fire. Εξαίρεση:
+                βολές από αλεξίσφαιρο.</span
               >
             </div>
-
             <div class="rl-item mandatory">
               <span class="rl-tag">DEAD MAN</span>
               <span class="rl-text"
-                >Οι νεκροί παίκτες δεν μιλάνε, δεν επικοινωνούν πληροφορίες, δεν
-                δίνουν εντολές. Μετακινούνται ήσυχα και αδιάφορα προς το
-                respawn.</span
+                >Νεκρός παίκτης δεν μιλά, δεν επικοινωνεί πληροφορίες, δεν δίνει
+                εντολές. Μετακινείσαι ήσυχα και αδιάφορα προς το respawn.</span
               >
             </div>
-
             <div class="rl-item mandatory">
               <span class="rl-tag">BANG RULE</span>
               <span class="rl-text"
@@ -1290,16 +1556,14 @@
                 περίπτωση αμοιβαίου BANG, και οι δύο νεκροί.</span
               >
             </div>
-
             <div class="rl-item mandatory">
               <span class="rl-tag">ΑΜΦΙΣΒΗΤΗΣΗ</span>
               <span class="rl-text"
                 >Δεν επιτρέπεται καμία αμφισβήτηση στο πεδίο. Αν πιστεύεις ότι
-                κάποιος δεν παίρνει τα hits του, ενημερώνεις τους Διοργανωτές --
+                κάποιος δεν παίρνει τα hits του, ενημερώνεις τον Game Master —
                 δεν αντιπαρατίθεσαι.</span
               >
             </div>
-
             <div class="rl-item optional">
               <span class="rl-tag">OVERSHOT</span>
               <span class="rl-text"
@@ -1331,7 +1595,7 @@
             font-size: 0.85rem;
           "
         >
-          ΠΕΔΙΟ JUMBO // ΛΑΡΙΣΑ // 07.06.2026
+          GHOST FACTORY DELTA FIELD // ΛΑΡΙΣΑ // 07.06.2026
         </p>
 
         <div class="map-wrap reveal">
@@ -1405,6 +1669,24 @@
       tick();
       const cdInterval = setInterval(tick, 1000);
 
+      /* ── HAMBURGER NAV ─────────────────────────────── */
+      const navToggle = document.getElementById("navToggle");
+      const navLinks = document.getElementById("navLinks");
+
+      navToggle.addEventListener("click", function () {
+        const isOpen = navLinks.classList.toggle("open");
+        this.setAttribute("aria-expanded", isOpen);
+        this.innerHTML = isOpen ? "&#10005;" : "&#9776;";
+      });
+
+      navLinks.querySelectorAll("a").forEach((a) => {
+        a.addEventListener("click", () => {
+          navLinks.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+          navToggle.innerHTML = "&#9776;";
+        });
+      });
+
       /* ── ACCORDION ─────────────────────────────────── */
       document.querySelectorAll(".accordion").forEach((btn) => {
         btn.addEventListener("click", function () {
@@ -1434,7 +1716,7 @@
 
       /* ── TYPEWRITER ────────────────────────────────── */
       const TW_TEXT = [
-        "Η πόλη έπεσε. Δεν σε είπαν πότε ακριβώς --",
+        "Η πόλη έπεσε. Δεν σε είπαν πότε ακριβώς —",
         "απλώς ξύπνησες και ήταν έτσι.",
         "",
         "Οι δρόμοι είναι άδειοι. Τα κτίρια στέκονται ακόμα,",
