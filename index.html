@@ -6,6 +6,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <title>GHOST TOWN - Η ΑΡΧΗ | Airsoft Event</title>
     <style>
       /*
@@ -21,7 +23,7 @@
       */
 
       /* Safe fonts only -- Black Ops One & Bebas Neue are handled below via @font-face */
-/* Safe fonts via Google */
+      /* Safe fonts via Google */
       @import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+Mono:wght@400&display=swap");
 
       /* ── 1. GREEK FALLBACKS (Unique Names) ────────────────── */
@@ -30,7 +32,8 @@
         font-style: normal;
         font-weight: 400;
         font-display: swap;
-        src: url("https://fonts.gstatic.com/s/exo2/v26/7cH1v4okm5zmbvwkAx_sfcEuiD8jWfWcPg.ttf") format("truetype");
+        src: url("https://fonts.gstatic.com/s/exo2/v26/7cH1v4okm5zmbvwkAx_sfcEuiD8jWfWcPg.ttf")
+          format("truetype");
         unicode-range: U+0370-03FF, U+1F00-1FFF;
       }
 
@@ -39,7 +42,8 @@
         font-style: normal;
         font-weight: 400;
         font-display: swap;
-        src: url("https://fonts.gstatic.com/s/oswald/v57/TK3_WkUHHAIjg75cFRf3bXL8LICs1_FvgUE.ttf") format("truetype");
+        src: url("https://fonts.gstatic.com/s/oswald/v57/TK3_WkUHHAIjg75cFRf3bXL8LICs1_FvgUE.ttf")
+          format("truetype");
         unicode-range: U+0370-03FF, U+1F00-1FFF;
       }
 
@@ -48,8 +52,9 @@
         font-family: "Black Ops Latin";
         font-style: normal;
         font-weight: 400;
-        font-display: swap;
-        src: url("https://fonts.gstatic.com/s/blackopsone/v21/qWcsB6-ypo7xBdr6Xshe96H3WDw.ttf") format("truetype");
+        font-display: optional;
+        src: url("https://fonts.gstatic.com/s/blackopsone/v21/qWcsB6-ypo7xBdr6Xshe96H3WDw.ttf")
+          format("truetype");
         unicode-range:
           U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
           U+0300-036F, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
@@ -60,8 +65,9 @@
         font-family: "Bebas Latin";
         font-style: normal;
         font-weight: 400;
-        font-display: swap;
-        src: url("https://fonts.gstatic.com/s/bebasneue/v16/JTUSjIg69CK48gW7PXooxW4.ttf") format("truetype");
+        font-display: optional;
+        src: url("https://fonts.gstatic.com/s/bebasneue/v16/JTUSjIg69CK48gW7PXooxW4.ttf")
+          format("truetype");
         unicode-range:
           U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
           U+0300-036F, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
@@ -78,13 +84,13 @@
         --red-dim: rgba(178, 34, 34, 0.25);
         --green: #4a7c59;
         --green-dim: rgba(74, 124, 89, 0.25);
-        
+
         /* Safari reads left-to-right. 
            It checks the Greek font first. If the letter is English, it skips to the Latin font!
         */
         --title: "Black Ops Greek", "Black Ops Latin", cursive;
         --label: "Bebas Greek", "Bebas Latin", cursive;
-        
+
         --mono: "Share Tech Mono", "Noto Sans Mono", monospace;
       }
 
@@ -1249,9 +1255,256 @@
           font-size: 1.2rem;
         }
       }
+      /* ── SCROLL PROGRESS BAR ────────────────────── */
+      #progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: linear-gradient(90deg, var(--red) 0%, rgba(178, 34, 34, 0.45) 100%);
+        box-shadow: 0 0 8px rgba(178, 34, 34, 0.65);
+        z-index: 10000;
+        pointer-events: none;
+      }
+
+      /* ── BACK TO TOP ─────────────────────────────── */
+      #back-top {
+        position: fixed;
+        bottom: 36px;
+        right: 36px;
+        width: 44px;
+        height: 44px;
+        background: rgba(8, 7, 5, 0.92);
+        border: 1px solid rgba(178, 34, 34, 0.4);
+        color: var(--red);
+        font-size: 0.8rem;
+        cursor: crosshair;
+        z-index: 900;
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease,
+          background 0.2s,
+          border-color 0.2s,
+          box-shadow 0.2s;
+        pointer-events: none;
+        letter-spacing: 0.05em;
+      }
+      #back-top.visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+      }
+      #back-top:hover {
+        background: rgba(178, 34, 34, 0.1);
+        border-color: var(--red);
+        box-shadow: 0 0 14px rgba(178, 34, 34, 0.22);
+      }
+
+      /* ── SCROLLSPY ACTIVE NAV LINK ──────────────── */
+      .nav-links a.active {
+        color: var(--text);
+      }
+      .nav-links a.active::after {
+        width: 100%;
+      }
+
+      /* ── TIMELINE GLOW PULSE ────────────────────── */
+      @keyframes tl-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 3px rgba(178, 34, 34, 0.3);
+          opacity: 0.6;
+        }
+        50% {
+          box-shadow:
+            0 0 10px rgba(178, 34, 34, 0.6),
+            0 0 24px rgba(178, 34, 34, 0.18);
+          opacity: 1;
+        }
+      }
+      .tl::before {
+        animation: tl-glow 2.8s ease-in-out infinite;
+      }
+
+      /* ── FPS TABLE TRANSITION ───────────────────── */
+      .fps-table td {
+        transition:
+          color 0.18s ease,
+          background 0.18s ease;
+      }
+
+      /* ── ACCORDION ACTIVE GLOW ──────────────────── */
+      .accordion.active {
+        box-shadow: inset 4px 0 14px rgba(178, 34, 34, 0.07);
+      }
+
+      /* ── SECTION SCANLINES (timeline) ──────────── */
+      #timeline {
+        position: relative;
+      }
+      #timeline::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(0, 0, 0, 0.052) 3px,
+          rgba(0, 0, 0, 0.052) 4px
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+      #timeline .inner {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── COPY COORDS HINT ───────────────────────── */
+      .ft-coords {
+        cursor: crosshair;
+        transition: color 0.25s;
+      }
+      .ft-coords::after {
+        content: " ↗ copy";
+        font-size: 0.55rem;
+        opacity: 0.3;
+        letter-spacing: 0.08em;
+        vertical-align: middle;
+      }
+      .ft-coords.copied {
+        color: var(--green);
+      }
+      .ft-coords.copied::after {
+        content: " ✓ copied";
+        opacity: 0.7;
+      }
+
+      /* ── PRINT STYLESHEET ───────────────────────── */
+      @media print {
+        #grain,
+        #particles,
+        #progress-bar,
+        #back-top,
+        nav,
+        .scroll-ind,
+        .divider-wire,
+        .map-wrap,
+        footer,
+        .stamp {
+          display: none !important;
+        }
+        html,
+        body {
+          background: #fff !important;
+          color: #111 !important;
+          cursor: auto !important;
+        }
+        .hero {
+          display: none !important;
+        }
+        .inner {
+          padding: 20px !important;
+          max-width: 100% !important;
+        }
+        .reveal {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .scenario-box {
+          background: #f5f5f0 !important;
+          border-left: 3px solid #444 !important;
+        }
+        .scenario-box::after {
+          display: none !important;
+        }
+        #tw-text,
+        h2,
+        h3 {
+          color: #111 !important;
+        }
+        .scenario-lbl,
+        .sec-label span {
+          color: #555 !important;
+        }
+        .tl::before {
+          background: #555 !important;
+          animation: none !important;
+          box-shadow: none !important;
+        }
+        .tl-item::before {
+          background: #444 !important;
+          box-shadow: none !important;
+        }
+        .tl-time {
+          color: #555 !important;
+        }
+        .tl-title {
+          color: #111 !important;
+        }
+        .tl-desc {
+          color: #444 !important;
+        }
+        #timeline::before,
+        #timeline::after {
+          display: none !important;
+        }
+        #rules {
+          background: #fff !important;
+        }
+        .accordion {
+          background: #f8f8f6 !important;
+          color: #111 !important;
+          border-left-color: #555 !important;
+          border-bottom: 1px solid #ddd !important;
+          box-shadow: none !important;
+          break-after: avoid;
+        }
+        .accordion::after {
+          display: none !important;
+        }
+        .panel {
+          max-height: none !important;
+          background: #fff !important;
+          border-left: 2px solid #ccc !important;
+          box-shadow: none !important;
+        }
+        .rl-tag {
+          border-color: #555 !important;
+          color: #444 !important;
+        }
+        .rl-text {
+          color: #333 !important;
+        }
+        .rl-note {
+          background: #f5eded !important;
+          border-left-color: #888 !important;
+          color: #444 !important;
+        }
+        .fps-table th {
+          color: #111 !important;
+          border-bottom: 1px solid #999 !important;
+        }
+        .fps-table td {
+          color: #333 !important;
+          border-bottom: 1px solid #eee !important;
+          background: none !important;
+          transition: none !important;
+        }
+        .fps-notes p {
+          color: #555 !important;
+        }
+      }
     </style>
   </head>
   <body>
+    <!-- Scroll progress bar -->
+    <div id="progress-bar"></div>
+
     <!-- Grain -->
     <div id="grain"></div>
 
@@ -1490,6 +1743,26 @@
               <span class="rl-tag">ΠΡΟΑΙΡΕΤΙΚΟ</span>
               <span class="rl-text">Χρήση μάσκας -- δικά σας δόντια.</span>
             </div>
+            <div class="rl-item mandatory">
+              <span class="rl-tag">ΚΑΝΟΝΑΣ</span>
+              <span class="rl-text"
+                >Αρχικά αποφεύγουμε όσο είναι δυνατόν τις βολές στο
+                κεφάλι.</span
+              >
+            </div>
+            <div class="rl-item mandatory">
+              <span class="rl-tag">ΑΠΑΓΟΡΕΥΕΤΑΙ</span>
+              <span class="rl-text"
+                >Δεν παίζει το Binary trigger, το Auto και το Burst (3
+                bbs).</span
+              >
+            </div>
+            <div class="rl-item mandatory">
+              <span class="rl-tag">ΚΑΝΟΝΑΣ</span>
+              <span class="rl-text"
+                >Χειροβομβίδες: μόνο εμπορίου &mdash; ΟΧΙ αυτοσχέδιες.</span
+              >
+            </div>
           </div>
         </div>
 
@@ -1498,9 +1771,6 @@
         </button>
         <div class="panel">
           <div class="rules-list">
-            <p class="rl-note">
-              ⚠ Αποφεύγουμε όσο είναι δυνατόν τις βολές στο κεφάλι.
-            </p>
             <div class="fps-scroll">
               <table class="fps-table">
                 <thead>
@@ -1524,21 +1794,21 @@
                     <td>Τυφέκιο AEG / GBB</td>
                     <td>350</td>
                     <td>~1.2 J</td>
-                    <td>10 μ</td>
+                    <td>6 μ</td>
                     <td>0.30g</td>
                   </tr>
                   <tr>
                     <td>MG **</td>
                     <td>400</td>
                     <td>~1.5 J</td>
-                    <td>20 μ</td>
+                    <td>10 μ</td>
                     <td>0.32g</td>
                   </tr>
                   <tr>
                     <td>DMR * **</td>
                     <td>450</td>
                     <td>~1.9 J</td>
-                    <td>25 μ</td>
+                    <td>15 μ</td>
                     <td>0.36g</td>
                   </tr>
                   <tr>
@@ -1558,7 +1828,6 @@
                 max 50 bbs ανά γεμιστήρα (Real-cap, 7.62mm).
               </p>
               <p>** Περιορισμένος αριθμός -- 1 ανά 10 παίκτες.</p>
-              <p>Χειροβομβίδες: μόνο εμπορίου -- ΟΧΙ αυτοσχέδιες.</p>
             </div>
           </div>
         </div>
@@ -1676,7 +1945,7 @@
         <div class="ft-unit">
           UNIT: GHOST-01 // OP: CLASSIFIED // STATUS: ACTIVE
         </div>
-        <div class="ft-coords">
+        <div class="ft-coords" id="ftCoords" title="Αντιγραφή συντεταγμένων">
           39°39'N 22°24'E // ALT: 74m // GRID: GT-657-408
         </div>
         <div class="ft-logo">GHOST TOWN</div>
@@ -1685,6 +1954,9 @@
         </div>
       </div>
     </footer>
+
+    <!-- Back to top -->
+    <button id="back-top" aria-label="Επιστροφή στην κορυφή">▲</button>
 
     <script>
       /* ── COUNTDOWN ─────────────────────────────────── */
@@ -1762,15 +2034,31 @@
         });
       });
 
-      /* ── PARALLAX ──────────────────────────────────── */
-      const heroBg = document.getElementById("heroBg");
+      /* ── PARALLAX + SCROLL UI ──────────────────────── */
+      const heroBg    = document.getElementById("heroBg");
+      const progressBar = document.getElementById("progress-bar");
+      const backTop   = document.getElementById("back-top");
+
       window.addEventListener(
         "scroll",
         () => {
+          const scrolled = window.scrollY;
+          const total = document.body.scrollHeight - window.innerHeight;
+
           if (heroBg)
-            heroBg.style.transform = `translateY(${window.scrollY * 0.38}px)`;
+            heroBg.style.transform = `translateY(${scrolled * 0.38}px)`;
+
+          if (progressBar && total > 0)
+            progressBar.style.width = ((scrolled / total) * 100).toFixed(2) + "%";
+
+          if (backTop)
+            backTop.classList.toggle("visible", scrolled > 400);
         },
         { passive: true },
+      );
+
+      backTop.addEventListener("click", () =>
+        window.scrollTo({ top: 0, behavior: "smooth" }),
       );
 
       /* ── TYPEWRITER ────────────────────────────────── */
@@ -1832,6 +2120,40 @@
       );
       const scenarioBox = document.querySelector(".scenario-box");
       if (scenarioBox) twObs.observe(scenarioBox);
+
+      /* ── SCROLLSPY ─────────────────────────────────── */
+      const navAnchors = document.querySelectorAll(".nav-links a[href^='#']");
+      const spyObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              navAnchors.forEach((a) => a.classList.remove("active"));
+              const match = document.querySelector(
+                `.nav-links a[href="#${e.target.id}"]`,
+              );
+              if (match) match.classList.add("active");
+            }
+          });
+        },
+        { rootMargin: "-35% 0px -55% 0px" },
+      );
+      document
+        .querySelectorAll("section[id]")
+        .forEach((s) => spyObs.observe(s));
+
+      /* ── COPY COORDINATES ───────────────────────────── */
+      const ftCoords = document.getElementById("ftCoords");
+      if (ftCoords) {
+        ftCoords.addEventListener("click", () => {
+          navigator.clipboard
+            .writeText("39.6571°N 22.4081°E // GT-657-408")
+            .then(() => {
+              ftCoords.classList.add("copied");
+              setTimeout(() => ftCoords.classList.remove("copied"), 2200);
+            })
+            .catch(() => {});
+        });
+      }
 
       /* ── DUST PARTICLES ────────────────────────────── */
       const canvas = document.getElementById("particles");
